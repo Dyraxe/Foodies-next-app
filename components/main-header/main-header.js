@@ -3,10 +3,22 @@ import logoImg from "@/assets/logo.png";
 import classes from "./main-header.module.css";
 import Image from "next/image";
 import MainHeaderBackground from "./main-header-background";
+import NavLink from "./nav-link";
+const headerNavLinks = [
+  {
+    label: "Browse meals",
+    href: "/meals",
+  },
+  {
+    label: "Foodies Community",
+    href: "/community",
+  },
+];
 export default function MainHeader() {
   return (
     <>
       <MainHeaderBackground />
+
       <header className={classes.header}>
         <Link className={classes.logo} href="/">
           <Image src={logoImg} alt="A plate with food on it" priority />
@@ -14,13 +26,11 @@ export default function MainHeader() {
         </Link>
         <nav className={classes.nav}>
           <ul>
-            <li>
-              <Link href="/meals">Browse Meals</Link>
-            </li>
-
-            <li>
-              <Link href="/community">Foodies Community</Link>
-            </li>
+            {headerNavLinks.map((link) => (
+              <NavLink key={link.href} href={link.href}>
+                {link.label}
+              </NavLink>
+            ))}
           </ul>
         </nav>
       </header>
