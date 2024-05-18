@@ -1,10 +1,23 @@
 import classes from "./page.module.css";
 import Link from "next/link";
+import { Suspense } from "react";
+
 import { getMeals } from "@/lib/meals";
+
 import MealsGrid from "@/components/meals/meals-grid";
-export default async function ShareMealsPage() {
+
+const loadingFallback = <p className={classes.loading}>Fetching meals...</p>;
+
+async function Meals() {
+  //  Next will wait for the function to resolve, meanwhile it will
+  //  Show the Suspense's fallback
+  //  Then the fetched content will streamed in the page, replacing the Suspense
   const meals = await getMeals();
 
+  return <MealsGrid meals={meals} />;
+}
+
+export default function ShareMealsPage() {
   return (
     <>
       <header className={classes.header}>
@@ -20,7 +33,9 @@ export default async function ShareMealsPage() {
         </p>
       </header>
       <main className={classes.main}>
-        <MealsGrid meals={meals} />
+        <Suspense fallback={loadingFallback}>
+          <Meals />
+        </Suspense>
       </main>
     </>
   );
