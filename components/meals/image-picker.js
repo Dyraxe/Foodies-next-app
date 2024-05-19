@@ -15,6 +15,7 @@ export default function ImagePicker({ label, name }) {
     imageInput.current.click();
   }
 
+  // used to show the image's preview on the ui
   function handleImageChange(event) {
     // to allow for multiple files pick, use the "multiple" property on the input
 
